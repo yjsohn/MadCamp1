@@ -1,12 +1,26 @@
 package com.example.basicapplicationfunction;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.ContentProviderOperation;
+import android.content.Intent;
+import android.content.OperationApplicationException;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -16,18 +30,144 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     private ArrayList <String> tabNames = new ArrayList<>();
+    FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
-    Fragment1 fragment1;
-    Gallery gallery;
-    Fragment3 fragment3;
+    Fragment1 fragment1 = adapter.getFragment1();
+    Fragment gallery = adapter.getItem(1);
+    Fragment fragment3 = adapter.getItem(2);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkPermission();
         loadTabName();
         setTabLayout();
         setViewPager();
+    }
+    public void mOnContactAdd(View v){
+        if(v.getId() != R.id.btnContactAdd)
+            return;
+
+        ContactAdd();
+        //fragment1.myListAdapter.notifyDataSetChanged();
+    }
+
+    String[] permission_list = {
+            Manifest.permission.WRITE_CONTACTS,
+            Manifest.permission.READ_CONTACTS
+    };
+
+    public void checkPermission(){
+        //현재 안드로이드 버전이 6.0미만이면 메서드를 종료한다.
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
+
+        for(String permission : permission_list){
+            //권한 허용 여부를 확인한다.
+            int chk = checkCallingOrSelfPermission(permission);
+
+            if(chk == PackageManager.PERMISSION_DENIED){
+                //권한 허용을여부를 확인하는 창을 띄운다
+                requestPermissions(permission_list,0);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0)
+        {
+            for(int i=0; i<grantResults.length; i++)
+            {
+                //허용됬다면
+                if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //fragment1.refresh();
+    }
+
+    public void ContactAdd(){
+        Intent intent = new Intent(this, ContactActivity.class);
+        //Log.d(null, "ContactAdd: start fin");
+        //startActivity(intent);
+        startActivityForResult(intent, Code.requestCode);
+        //fragment1.refresh();
+        //Log.d(null, "ContactAdd: refresh fin");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
+        super.onActivityResult(requestCode, resultCode, resultIntent);
+        if(requestCode == Code.requestCode && resultCode == Code.resultCode){
+            /*new Thread(){
+            @Override
+            public void run() {*/
+
+            ArrayList<ContentProviderOperation> list = new ArrayList<>();
+            try{
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, resultIntent.getStringExtra("name"))   //이름
+
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, resultIntent.getStringExtra("number"))           //전화번호
+                                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE  , ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)   //번호타입(Type_Mobile : 모바일)
+
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.Email.DATA  , resultIntent.getStringExtra("email"))  //이메일
+                                .withValue(ContactsContract.CommonDataKinds.Email.TYPE  , ContactsContract.CommonDataKinds.Email.TYPE_WORK)     //이메일타입(Type_Work : 직장)
+
+                                .build()
+                );
+
+                getApplicationContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, list);  //주소록추가
+                list.clear();   //리스트 초기화
+                fragment1.refresh();
+            }catch(RemoteException e){
+                e.printStackTrace();
+            }catch(OperationApplicationException e){
+                e.printStackTrace();
+            }
+            /*}
+        }.start();*/
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -42,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         tabNames.add("탭3");
     }
     private void setViewPager() {
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

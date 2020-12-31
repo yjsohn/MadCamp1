@@ -30,4 +30,5 @@
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/profile_imageview"
         android:text="TextView" />
+
 </RelativeLayout>

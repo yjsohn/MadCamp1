@@ -1,27 +1,19 @@
 package com.example.basicapplicationfunction;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.ContactsContract;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,11 +21,7 @@ import java.util.HashMap;
 
 public class Fragment1 extends Fragment{
 
-        SimpleCursorAdapter mAdapter;
-        // '연락처'에서 데이터를 뽑아낼 column들 (이 이외엔 무시)
-        static final String[] PROJECTION = new String[] { ContactsContract.Data._ID, ContactsContract.Data.DISPLAY_NAME };
-        // '연락처'에서 어떤 조건의 데이터를 뽑아낼 것인가
-        static final String SELECTION = "((" + ContactsContract.Data.DISPLAY_NAME + " NOTNULL)" + " AND (" + ContactsContract.Data.DISPLAY_NAME + " != ''))";
+    MyListAdapter myListAdapter;
 
     View view;
     public Fragment1() {
@@ -46,6 +34,10 @@ public class Fragment1 extends Fragment{
         return fragment1;
     }
 
+    public void refresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +87,7 @@ public class Fragment1 extends Fragment{
             list_itemArrayList.add(new list_item(Photo_id, person_id, contactName, phonenumber));
         }
         c.close();
-        MyListAdapter myListAdapter = new MyListAdapter(getContext(), list_itemArrayList);
+        myListAdapter = new MyListAdapter(getContext(), list_itemArrayList);
         list.setAdapter(myListAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
