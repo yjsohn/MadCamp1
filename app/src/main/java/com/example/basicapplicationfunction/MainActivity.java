@@ -60,7 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void mOnAlarmAdd(View v){
+        if(v.getId() != R.id.btnAlarmAdd)
+            return;
 
+        Intent intent = new Intent(this, AlarmActivity.class);
+        //Log.d(null, "ContactAdd: start fin");
+        startActivity(intent);
+        //startActivityForResult(intent, Code.requestCode);
+        //fragment1.myListAdapter.notifyDataSetChanged();
+    }
 
     public void mOnContactAdd(View v){
         if(v.getId() != R.id.btnContactAdd)
@@ -72,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
-            Manifest.permission.READ_CONTACTS
-            //Manifest.permission.WAKE_LOCK,
-            //Manifest.permission.RECEIVE_BOOT_COMPLETED
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WAKE_LOCK,
+            Manifest.permission.RECEIVE_BOOT_COMPLETED,
+            Manifest.permission.CALL_PHONE
     };
 
     public void checkPermission(){

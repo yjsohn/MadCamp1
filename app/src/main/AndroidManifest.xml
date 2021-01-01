@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicApplicationFunction">
-        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".InfoActivity"></activity>
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".ContactActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +27,14 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".DeviceBootReceiver"
+        <receiver
+            android:name=".DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".AlarmReceiver"/>
-
+        <receiver android:name=".AlarmReceiver" />
     </application>
+
 </manifest>

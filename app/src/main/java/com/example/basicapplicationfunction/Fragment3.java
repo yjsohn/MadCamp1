@@ -40,12 +40,11 @@ public class Fragment3 extends Fragment {
         return fragment3;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment3, container, false);
-
+/*
         final TimePicker picker = (TimePicker) view.findViewById(R.id.timePicker);
         picker.setIs24HourView(true);
 
@@ -121,9 +120,10 @@ public class Fragment3 extends Fragment {
 
                 diaryNotification(calendar);
             }
-        });
+        });*/
         return view;
     }
+
     void diaryNotification(Calendar calendar)
     {
 //        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
