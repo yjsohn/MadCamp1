@@ -9,9 +9,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.ContentProviderOperation;
+import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,12 +24,19 @@ import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         loadTabName();
         setTabLayout();
         setViewPager();
+
     }
+
+
+
     public void mOnContactAdd(View v){
         if(v.getId() != R.id.btnContactAdd)
             return;
@@ -57,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
             Manifest.permission.READ_CONTACTS
+            //Manifest.permission.WAKE_LOCK,
+            //Manifest.permission.RECEIVE_BOOT_COMPLETED
     };
 
     public void checkPermission(){
