@@ -1,16 +1,59 @@
 package com.example.basicapplicationfunction;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.basicapplicationfunction.Gallery.DBHelper;
+import com.example.basicapplicationfunction.Gallery.Picture;
+import com.example.basicapplicationfunction.Gallery.PictureAdapter;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+//!!!!!파일 경로:  file:///storage/emulated/0/Pictures/building.jpg
+
 
 public class Fragment3 extends Fragment {
     View view;
+    Context context;
+    DBHelper MyDB;
+    private static final String TAG = "blackjin";
+
+    private Boolean isPermission = true;
+
+    private static final int PICK_FROM_ALBUM = 1;
+    private ArrayList<Picture> mArrayList;
+    static private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private FragmentManager fragmentManager;
+
+    private File tempFile;
+
     public Fragment3() {
         // Required empty public constructor
     }
@@ -26,6 +69,12 @@ public class Fragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment3, container, false);
+        context = view.getContext();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }
