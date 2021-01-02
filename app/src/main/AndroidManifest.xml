@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".Temp.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,9 +28,9 @@
         </activity>
         <activity android:name=".Gallery.GalleryContent" />
         <activity android:name=".Gallery.EditContent" />
-        <activity android:name=".activities.RingActivity">
+        <activity android:name=".Temp.RingActivity">
         </activity>
-        <receiver android:name=".broadcastreceiver.AlarmBroadcastReceiver">
+        <receiver android:name=".Temp.AlarmBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
