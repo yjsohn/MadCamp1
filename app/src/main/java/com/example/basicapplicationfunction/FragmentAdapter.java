@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.basicapplicationfunction.Gallery.Gallery;
+import com.example.basicapplicationfunction.Temp.AlarmsListFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
     public FragmentAdapter(FragmentManager fm) {
@@ -12,7 +13,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     }
     Fragment1 fragment1 = Fragment1.newInstance();
     Gallery gallery = Gallery.newInstance();
-    Fragment3 fragment3 = Fragment3.newInstance();
+    AlarmsListFragment fragment3 = AlarmsListFragment.newInstance();
 
     @Override
     public Fragment getItem(int position) {
