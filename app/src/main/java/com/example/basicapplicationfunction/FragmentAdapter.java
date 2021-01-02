@@ -13,7 +13,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     }
     Fragment1 fragment1 = Fragment1.newInstance();
     Gallery gallery = Gallery.newInstance();
-    AlarmsListFragment fragment3 = AlarmsListFragment.newInstance();
+    Fragment3 fragment3 = Fragment3.newInstance();
 
     @Override
     public Fragment getItem(int position) {

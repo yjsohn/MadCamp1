@@ -67,9 +67,9 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
         addAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
-                NavHostFragment finalHost = NavHostFragment.create(R.navigation.nav_graph);
-                finalHost.getNavController().navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
+                Navigation.findNavController(v).navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
+                //NavHostFragment finalHost = NavHostFragment.create(R.navigation.nav_graph);
+                //finalHost.getNavController().navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
                 /*NavHostFragment navHostFragment = (NavHostFragment) myContext.getSupportFragmentManager()
                         .findFragmentById(R.id.nav_graph);
                 navHostFragment.getNavController();*/
