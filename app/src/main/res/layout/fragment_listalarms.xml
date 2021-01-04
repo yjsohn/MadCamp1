@@ -14,9 +14,9 @@
         <TextView
             android:id="@+id/fragment_listalarms_myAlarms"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="My Alarms"
-            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,13 +46,14 @@
             android:id="@+id/all_alarm_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
-            android:text="Button"
+            android:layout_marginTop="4dp"
+            android:text="Delete"
+            android:backgroundTint="#263663"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_listalarms_addAlarm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.946"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.947"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

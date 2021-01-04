@@ -38,7 +38,13 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         Alarm alarm = alarms.get(position);
-        holder.alarmDelete.setVisibility(View.GONE);
+        if(buttonShow==false) {
+            holder.alarmDelete.setVisibility(View.GONE);
+            holder.alarmDelete.setChecked(false);
+        }
+        else {
+            holder.alarmDelete.setVisibility(View.VISIBLE);
+        }
         holder.bind(alarm, listener);
     }
 
