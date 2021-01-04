@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         setViewPager();
 
     }
-    
+
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
             Manifest.permission.READ_CONTACTS,

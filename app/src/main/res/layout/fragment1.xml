@@ -8,6 +8,15 @@
     android:orientation="vertical"
     android:background="#E4E8F0">
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="59dp">
+
+    </ListView>
+
     <ImageButton
         android:id="@+id/btnContactAdd"
         android:layout_width="55dp"
@@ -19,16 +28,6 @@
         android:src="@drawable/add_icon"
         android:tint="#263663"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="59dp">
-
-    </ListView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
