@@ -15,9 +15,9 @@
         <TextView
             android:id="@+id/fragment_createalarm_scheduleAlarmHeading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Schedule Alarm"
-            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="#263663"
             android:text="Schedule Alarm"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="133dp" />

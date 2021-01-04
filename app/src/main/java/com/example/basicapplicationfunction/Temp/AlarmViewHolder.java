@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -18,13 +19,15 @@ import com.example.basicapplicationfunction.R;
 
 import java.util.List;
 
+import butterknife.OnClick;
+
 public class AlarmViewHolder extends RecyclerView.ViewHolder {
     private TextView alarmTime;
     private ImageView alarmRecurring;
     private TextView alarmRecurringDays;
     private TextView alarmTitle;
 
-    ImageView alarmDelete;
+    CheckBox alarmDelete;
     Switch alarmStarted;
 
 
@@ -45,9 +48,9 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                 AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
 
                 if(pos != RecyclerView.NO_POSITION && alarmRecyclerViewAdapter.getButtonShow()==false) {
-                    alarmDelete.setVisibility(v.VISIBLE);
-
                     alarmRecyclerViewAdapter.setButtonShow(true);
+                    alarmRecyclerViewAdapter.notifyDataSetChanged();
+                    alarmDelete.setChecked(true);
                     AlarmsListFragment.deleteAlarms.setVisibility(View.VISIBLE);
 
                     List<Alarm> alarms = alarmRecyclerViewAdapter.getAlarms();
@@ -55,6 +58,8 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                     Alarm alarm = alarms.get(pos);
 
                     deleteAlarms.add(alarm);
+
+
                     /*
                     List<Alarm> alarms = alarmRecyclerViewAdapter.getAlarms();
                     Alarm alarm = alarms.get(pos);
@@ -84,11 +89,34 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                     Alarm alarm = alarms.get(pos);
 
                     if(deleteAlarms.contains(alarm)) {
-                        alarmDelete.setVisibility(v.GONE);
+                        alarmDelete.setChecked(false);
                         deleteAlarms.remove(alarm);
                     }
                     else {
-                        alarmDelete.setVisibility(v.VISIBLE);
+                        alarmDelete.setChecked(true);
+                        deleteAlarms.add(alarm);
+                    }
+                }
+            }
+        });
+
+        alarmDelete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
+                if(alarmRecyclerViewAdapter.getButtonShow()==true){
+                    int pos = getAdapterPosition();
+
+                    List<Alarm> alarms = alarmRecyclerViewAdapter.getAlarms();
+                    List<Alarm> deleteAlarms = alarmRecyclerViewAdapter.getDeleteAlarms();
+                    Alarm alarm = alarms.get(pos);
+
+                    if(deleteAlarms.contains(alarm)) {
+                        alarmDelete.setChecked(false);
+                        deleteAlarms.remove(alarm);
+                    }
+                    else {
+                        alarmDelete.setChecked(true);
                         deleteAlarms.add(alarm);
                     }
                 }

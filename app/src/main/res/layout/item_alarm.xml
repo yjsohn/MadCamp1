@@ -17,6 +17,24 @@
             android:orientation="horizontal"
             android:padding="6dp">
 
+            <!--ImageView
+                android:id="@+id/item_alarm_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone"
+                app:srcCompat="?android:attr/textCheckMark" /-->
+
+            <CheckBox
+                android:id="@+id/item_alarm_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text=""
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/item_alarm_time"
                 android:layout_width="wrap_content"
@@ -58,15 +76,6 @@
                 android:layout_marginLeft="10dp"
                 android:text="X"
                 android:visibility="gone" /-->
-
-            <ImageView
-                android:id="@+id/item_alarm_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                app:srcCompat="?android:attr/textCheckMark" />
 
             <View
                 android:layout_width="0dp"

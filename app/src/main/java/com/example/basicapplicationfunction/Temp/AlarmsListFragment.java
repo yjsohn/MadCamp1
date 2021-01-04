@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,15 +37,16 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
     private ImageButton addAlarm;
     private FragmentActivity myContext;
     public static Button deleteAlarms;
+    public static NavController navController = null;
 
     @Override
     public void toDeleteMode(){
-        this.getView().setBackgroundColor(Color.parseColor("#FFA500"));
+        //this.getView().setBackgroundColor(Color.parseColor("#FFA500"));
     }
 
     @Override
     public void toOriginal(){
-        this.getView().setBackgroundColor(Color.parseColor("#72A0E0"));
+        //this.getView().setBackgroundColor(Color.parseColor("#E4E8F0"));
     }
 
     @Override
@@ -83,6 +85,7 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
         addAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                navController = Navigation.findNavController(v);
                 Navigation.findNavController(v).navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
                 //NavHostFragment finalHost = NavHostFragment.create(R.navigation.nav_graph);
                 //finalHost.getNavController().navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
@@ -148,4 +151,12 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
 
          Log.d("touch", "touch");
      }
+
+    public static NavController getNavController() {
+        return navController;
+    }
+
+    public static void setNavController(NavController navController) {
+        AlarmsListFragment.navController = navController;
+    }
 }

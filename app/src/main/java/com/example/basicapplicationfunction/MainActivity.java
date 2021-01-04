@@ -75,13 +75,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
-        if(alarmRecyclerViewAdapter != null && alarmRecyclerViewAdapter.getButtonShow() == true){
-            alarmRecyclerViewAdapter.notifyDataSetChanged();
+        if(AlarmsListFragment.getNavController() != null){
+            AlarmsListFragment.getNavController().navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
+            AlarmsListFragment.setNavController(null);
+        }
+        else if(alarmRecyclerViewAdapter != null && alarmRecyclerViewAdapter.getButtonShow() == true){
             alarmRecyclerViewAdapter.setButtonShow(false);
-            AlarmsListFragment.deleteAlarms.setVisibility(View.GONE);
             alarmRecyclerViewAdapter.getDeleteAlarms().clear();
+            alarmRecyclerViewAdapter.notifyDataSetChanged();
+            AlarmsListFragment.deleteAlarms.setVisibility(View.GONE);
         }
         else {
+
             super.onBackPressed();
         }
     }
@@ -215,9 +220,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTabName(){
-        tabNames.add("탭1");
-        tabNames.add("탭2");
-        tabNames.add("탭3");
+        tabNames.add("Contact");
+        tabNames.add("Gallery");
+        tabNames.add("Alarm");
     }
     private void setViewPager() {
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
