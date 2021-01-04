@@ -184,9 +184,34 @@ public class Fragment1 extends Fragment{
             }
         });
 
+        view.findViewById(R.id.btnContactAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnContactAdd(v);
+            }
+        });
+
+
         return view;
     }
 
+    public void mOnContactAdd(View v){
+        Log.d(null, "ContactAdd: start fin");
+
+        if(v.getId() != R.id.btnContactAdd)
+            return;
+
+        ContactAdd();
+        //fragment1.myListAdapter.notifyDataSetChanged();
+    }
+
+    public void ContactAdd(){
+        Intent intent = new Intent(getActivity(), ContactActivity.class);
+        //startActivity(intent);
+        startActivityForResult(intent, Code.requestCode);
+        //fragment1.refresh();
+        //Log.d(null, "ContactAdd: refresh fin");
+    }
 
 
     /*public Loader<Cursor> onCreateLoader(int id, Bundle args) { // 커서로더를 만들어 리턴해주면, 로딩이 시작된다.

@@ -23,7 +23,6 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.BasicApplicationFunction">
         <activity android:name=".InfoActivity"></activity>
-        <activity android:name=".AlarmActivity" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

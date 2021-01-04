@@ -98,25 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void mOnAlarmAdd(View v){
-        if(v.getId() != R.id.btnAlarmAdd)
-            return;
-
-        Intent intent = new Intent(this, AlarmActivity.class);
-        //Log.d(null, "ContactAdd: start fin");
-        startActivity(intent);
-        //startActivityForResult(intent, Code.requestCode);
-        //fragment1.myListAdapter.notifyDataSetChanged();
-    }
-
-    public void mOnContactAdd(View v){
-        if(v.getId() != R.id.btnContactAdd)
-            return;
-
-        ContactAdd();
-        //fragment1.myListAdapter.notifyDataSetChanged();
-    }
-
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
             Manifest.permission.READ_CONTACTS,
@@ -165,14 +146,7 @@ public class MainActivity extends AppCompatActivity {
         //fragment1.refresh();
     }
 
-    public void ContactAdd(){
-        Intent intent = new Intent(this, ContactActivity.class);
-        //Log.d(null, "ContactAdd: start fin");
-        //startActivity(intent);
-        startActivityForResult(intent, Code.requestCode);
-        //fragment1.refresh();
-        //Log.d(null, "ContactAdd: refresh fin");
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
