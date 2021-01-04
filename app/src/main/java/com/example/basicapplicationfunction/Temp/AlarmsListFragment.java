@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +29,7 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
     private AlarmRecyclerViewAdapter alarmRecyclerViewAdapter;
     private AlarmsListViewModel alarmsListViewModel;
     private RecyclerView alarmsRecyclerView;
-    private Button addAlarm;
+    private ImageButton addAlarm;
     private FragmentActivity myContext;
 
     @Override

@@ -13,10 +13,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,17 +51,19 @@ public class Gallery extends Fragment {
     View view;
     Context context;
     DBHelper MyDB;
+
     private static final String TAG = "blackjin";
 
     private Boolean isPermission = true;
 
     private static final int PICK_FROM_ALBUM = 1;
-    private static final int GET_UPDATED_INFO = 2;
+    private static final int PICK_FROM_CAMERA = 2;
     private ArrayList<Picture> mArrayList;
     static private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private FragmentManager fragmentManager;
+    private MenuItem.OnMenuItemClickListener listener;
 
     private File tempFile;
 
@@ -76,6 +84,7 @@ public class Gallery extends Fragment {
         view = inflater.inflate(R.layout.gallery, container, false);
         context = view.getContext();
         tedPermission();
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -86,18 +95,120 @@ public class Gallery extends Fragment {
         //MyDB.insertPicture("/storage/emulated/0/Pictures/duck.jpg", "", "", "");
         mArrayList = MyDB.getAllImages();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.galleryView);
-        mAdapter = new PictureAdapter(context, mArrayList);
+        mAdapter = new PictureAdapter(context, mArrayList, this);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(context, 3);
         mRecyclerView.setLayoutManager(layoutManager);
-        view.findViewById(R.id.addBtn).setOnClickListener(new View.OnClickListener() {
+
+        listener = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.gallery:  //click gallery
+                        if(isPermission)
+                            goToAlbum();
+                        break;
+                    case R.id.camera:   //click camera
+                        if(isPermission)
+                            takePhoto();
+                        break;
+                }
+                return true;
+            }
+        };
+
+        view.findViewById(R.id.addBtn).setOnClickListener(new View.OnClickListener() {  //추가버튼 클릭
             @Override
             public void onClick(View view) {
-                goToAlbum();
+
+                PopupMenu popup= new PopupMenu(context, view);
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()){
+                            case R.id.gallery:  //click gallery
+                                if(isPermission)
+                                    goToAlbum();
+                                break;
+                            case R.id.camera:   //click camera
+                                if(isPermission)
+                                    takePhoto();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
             }
         });
+
+        view.findViewById(R.id.deleteBtn).setOnClickListener(new View.OnClickListener() {   //삭제버튼 클릭
+            @Override
+            public void onClick(View view) {
+                MyDB.deleteAll();//db삭제
+                refreshFragment();
+            }
+        });
+    }
+
+    private void takePhoto() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            tempFile = createImageFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+
+            /**
+             *  안드로이드 OS 누가 버전 이후부터는 file:// URI 의 노출을 금지로 FileUriExposedException 발생
+             *  Uri 를 FileProvider 도 감싸 주어야 합니다.
+             *
+             *  참고 자료 http://programmar.tistory.com/4 , http://programmar.tistory.com/5
+             */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+                Uri photoUri = FileProvider.getUriForFile(context,
+                        "com.example.basicapplicationfunction", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            } else {
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            }
+        }
+    }
+    private File createImageFile() throws IOException {
+        // 이미지 파일 이름 ( blackJin_{시간}_ )
+        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
+        String imageFileName = "basicapp_" + timeStamp + "_";
+
+        // 이미지가 저장될 파일 주소 ( blackJin )
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera/");   //저장 위치 확인해보기
+        if (!storageDir.exists()) storageDir.mkdirs();
+
+        // 빈 파일 생성
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.d(TAG, "createImageFile : " + image.getAbsolutePath());
+
+        return image;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.popup_menu, menu);
+    }
+
+    void refreshFragment(){
+        //refresh fragment
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 
     //사진첩에서 사진 받아오기
@@ -140,8 +251,11 @@ public class Gallery extends Fragment {
                 }
             }
             //refresh fragment
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
+            refreshFragment();
+            addImage();
+        }
+        else if(requestCode == PICK_FROM_CAMERA){
+            refreshFragment();
             addImage();
         }
     }
@@ -154,15 +268,12 @@ public class Gallery extends Fragment {
 
     //권한 설정
     private void tedPermission() {
-
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
                 // 권한 요청 성공
                 isPermission = true;
-
             }
-
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
                 // 권한 요청 실패
@@ -171,12 +282,12 @@ public class Gallery extends Fragment {
             }
         };
 
+
         //Todo: 반복 문구 수정
         TedPermission.with(context)
                 .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
+
     }
 }

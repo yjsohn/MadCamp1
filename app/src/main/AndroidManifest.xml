@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -27,15 +28,25 @@
         </activity>
         <activity android:name=".Gallery.GalleryContent" />
         <activity android:name=".Gallery.EditContent" />
-        <activity android:name=".activities.RingActivity">
+        <activity android:name=".Temp.RingActivity">
         </activity>
-        <receiver android:name=".broadcastreceiver.AlarmBroadcastReceiver">
+        <receiver android:name=".Temp.AlarmBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <service android:name=".Temp.AlarmService" />
         <service android:name=".Temp.RescheduleAlarmsService" />
-    </application>
+        <!-- 사진 촬영을 위한 provide -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.basicapplicationfunction"
+            android:exported="false"
+            android:grantUriPermissions="true">
 
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
 </manifest>

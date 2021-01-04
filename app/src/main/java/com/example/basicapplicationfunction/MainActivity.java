@@ -13,6 +13,7 @@ import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;

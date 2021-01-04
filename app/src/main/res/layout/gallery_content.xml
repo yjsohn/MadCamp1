@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/date"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E4E8F0">
 
     <ImageView
         android:id="@+id/detailed_image2"
@@ -15,17 +16,20 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="0.110000014" />
 
-    <Button
+    <ImageButton
         android:id="@+id/edit_btn"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="수정"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:tint="#263663"
+        android:src="@drawable/edit_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +40,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:hint="날짜"
+        android:textSize="15sp"
+        android:fontFamily="@font/lotte_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailed_image2" />
 
@@ -44,8 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:hint="위치"
+        android:textSize="15sp"
+        android:fontFamily="@font/lotte_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_tv" />
 
@@ -54,8 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:hint="내용을 입력해주세요"
+        android:textSize="15sp"
+        android:fontFamily="@font/lotte_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_tv" />
 

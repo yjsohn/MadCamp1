@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +26,7 @@ public class GalleryContent extends AppCompatActivity {
     TextView date_tv;
     TextView location_tv;
     TextView description_tv;
-    Button edit;
+    ImageButton edit;
     DBHelper MyDB;
     SQLiteDatabase db;
     String path;
@@ -41,11 +43,20 @@ public class GalleryContent extends AppCompatActivity {
         MyDB = new DBHelper(this);
         db = MyDB.getWritableDatabase();
         image = findViewById(R.id.detailed_image2);
+        //set Rounding
+        GradientDrawable drawable= (GradientDrawable) getDrawable(R.drawable.background_rounding);
+        image.setBackground(drawable);
+        image.setClipToOutline(true);
+
         date_tv= findViewById(R.id.date_tv);
         location_tv = findViewById(R.id.location_tv);
         description_tv = findViewById(R.id.description_tv);
         edit = findViewById(R.id.edit_btn);
         edit.setOnClickListener(view -> {
+            ImageInfo[1] = date_tv.getText().toString();
+            ImageInfo[2] = location_tv.getText().toString();
+            ImageInfo[3] = description_tv.getText().toString();
+
             Intent intent = new Intent(getApplicationContext(), EditContent.class);
             intent.putExtra("DETAIL_INFO", ImageInfo);
             startActivityForResult(intent, 1);
@@ -67,14 +78,16 @@ public class GalleryContent extends AppCompatActivity {
                 date_tv.setText(returnedInfo[0]);
                 location_tv.setText(returnedInfo[1]);
                 description_tv.setText(returnedInfo[2]);
-                ContentValues values = new ContentValues();
+                /*ContentValues values = new ContentValues();
                 values.put("date", returnedInfo[0]);
                 values.put("location", returnedInfo[1]);
                 values.put("description", returnedInfo[2]);
                 db.update("images", values,"path=?", new String[]{ImageInfo[0]});
+                */
             }
         }
     }
+
     void DBSearch(String tableName, String path) {
         Cursor cursor = null;
         try {

@@ -40,8 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return true;
     }
-    public ArrayList<Picture> getAllImages() {
 
+    public ArrayList<Picture> getAllImages() {
         ArrayList<Picture> array_list = new ArrayList();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from images", null);

@@ -4,34 +4,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E4E8F0">
 
-    <Button
+    <ImageButton
         android:id="@+id/addBtn"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="4dp"
-        android:text="ADD"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="575dp"
+        android:layout_marginEnd="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/add_icon"
+        android:tint="#263663"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/deleteBtn"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="4dp"
-        android:text="DELETE ALL"
-        app:layout_constraintStart_toEndOf="@+id/addBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="570dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/delete_icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
