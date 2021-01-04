@@ -6,6 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -15,6 +18,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -62,8 +69,18 @@ public class MyListAdapter extends BaseAdapter{
         //profile_imageView.setImageBitmap(list_itemArrayList.get(position).getProfile_image());
         if(image != null)
             profile_imageView.setImageBitmap(image);
-        else
-            profile_imageView.setImageResource(R.mipmap.ic_launcher);
+        else {    //설정된 사진 없음
+            profile_imageView.setImageResource(R.drawable.profile_icon);
+            DrawableCompat.setTint(
+                    DrawableCompat.wrap(profile_imageView.getDrawable()),
+                    ContextCompat.getColor(context, R.color.highlight)
+            );
+        }
+
+        //set Rounding
+        GradientDrawable drawable= (GradientDrawable) context.getDrawable(R.drawable.background_rounding);
+        profile_imageView.setBackground(drawable);
+        profile_imageView.setClipToOutline(true);
         return convertView;
     }
 

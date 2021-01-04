@@ -3,6 +3,7 @@ package com.example.basicapplicationfunction;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,11 @@ public class InfoActivity extends AppCompatActivity {
         phone.setText(Intent.getStringExtra("phone"));
         email.setText(Intent.getStringExtra("email"));
         image.setImageBitmap(getIntent().getParcelableExtra("image"));
+
+        //set Rounding
+        GradientDrawable drawable= (GradientDrawable) getDrawable(R.drawable.background_rounding);
+        image.setBackground(drawable);
+        image.setClipToOutline(true);
     }
 
     public void mOnCall(View v){

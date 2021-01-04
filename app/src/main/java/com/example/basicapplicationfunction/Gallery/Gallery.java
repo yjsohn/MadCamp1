@@ -282,12 +282,10 @@ public class Gallery extends Fragment {
             }
         };
 
-
         //Todo: 반복 문구 수정
         TedPermission.with(context)
                 .setPermissionListener(permissionListener)
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
-
     }
 }
