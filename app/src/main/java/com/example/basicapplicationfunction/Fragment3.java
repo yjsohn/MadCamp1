@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.basicapplicationfunction.Temp.DeleteMode;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 //!!!!!파일 경로:  file:///storage/emulated/0/Pictures/building.jpg
@@ -46,6 +48,7 @@ import java.util.Locale;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Fragment3 extends Fragment {
+
     View view;
     Context context;
     DBHelper MyDB;
@@ -65,7 +68,6 @@ public class Fragment3 extends Fragment {
     public Fragment3() {
         // Required empty public constructor
     }
-
 
     public static Fragment3 newInstance() {
         Fragment3 fragment3 = new Fragment3();

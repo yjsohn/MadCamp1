@@ -1,7 +1,10 @@
 package com.example.basicapplicationfunction.Temp;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +28,30 @@ import com.example.basicapplicationfunction.R;
 
 import java.util.List;
 
-public class AlarmsListFragment extends Fragment implements OnToggleAlarmListener {
-    private AlarmRecyclerViewAdapter alarmRecyclerViewAdapter;
-    private AlarmsListViewModel alarmsListViewModel;
+public class AlarmsListFragment extends Fragment implements OnToggleAlarmListener, DeleteMode {
+
+    public static AlarmRecyclerViewAdapter alarmRecyclerViewAdapter;
+    public static AlarmsListViewModel alarmsListViewModel;
     private RecyclerView alarmsRecyclerView;
     private ImageButton addAlarm;
     private FragmentActivity myContext;
+    public static Button deleteAlarms;
+
+    @Override
+    public void toDeleteMode(){
+        this.getView().setBackgroundColor(Color.parseColor("#FFA500"));
+    }
+
+    @Override
+    public void toOriginal(){
+        this.getView().setBackgroundColor(Color.parseColor("#72A0E0"));
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        alarmRecyclerViewAdapter = new AlarmRecyclerViewAdapter(this);
+        alarmRecyclerViewAdapter = new AlarmRecyclerViewAdapter(this, this);
         alarmsListViewModel = new ViewModelProvider(this).get(AlarmsListViewModel.class);
         alarmsListViewModel.getAlarmsLiveData().observe(this, new Observer<List<Alarm>>() {
             @Override
@@ -76,8 +91,31 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
                 navHostFragment.getNavController();*/
             }
         });
+        deleteAlarms = view.findViewById(R.id.all_alarm_delete);
+        deleteAlarms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alarmRecyclerViewAdapter.getDeleteAlarms().forEach(alarm -> {
+                    AlarmsListFragment.getAlarmsListViewModel().delete(alarm);
+
+                    if (alarm.isStarted())
+                        alarm.cancelAlarm(v.getContext());
+                });
+                alarmRecyclerViewAdapter.getDeleteAlarms().clear();
+                alarmRecyclerViewAdapter.setButtonShow(false);
+                deleteAlarms.setVisibility(View.GONE);
+                alarmRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
+    public static AlarmsListViewModel getAlarmsListViewModel() {
+        return alarmsListViewModel;
+    }
+
+    public static AlarmRecyclerViewAdapter getAlarmRecyclerViewAdapter() {
+        return alarmRecyclerViewAdapter;
+    }
 
     public static AlarmsListFragment newInstance() {
         AlarmsListFragment alarmsListFragment = new AlarmsListFragment();
@@ -100,4 +138,14 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
             alarmsListViewModel.update(alarm);
         }
     }
+
+     public void hideButton(){
+         /*Rect viewRect = new Rect();
+         mTooltip.getGlobalVisibleRect(viewRect);
+         if (!viewRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+             setVisibility(View.GONE);
+         }*/
+
+         Log.d("touch", "touch");
+     }
 }
