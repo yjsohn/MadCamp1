@@ -98,24 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void mOnAlarmAdd(View v){
-        if(v.getId() != R.id.btnAlarmAdd)
-            return;
 
-        Intent intent = new Intent(this, AlarmActivity.class);
-        //Log.d(null, "ContactAdd: start fin");
-        startActivity(intent);
-        //startActivityForResult(intent, Code.requestCode);
-        //fragment1.myListAdapter.notifyDataSetChanged();
-    }
-
-    public void mOnContactAdd(View v){
-        if(v.getId() != R.id.btnContactAdd)
-            return;
-
-        ContactAdd();
-        //fragment1.myListAdapter.notifyDataSetChanged();
-    }
 
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
@@ -148,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         {
             for(int i=0; i<grantResults.length; i++)
             {
-                //허용됬다면
+                //허용됐다면
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
@@ -231,8 +214,6 @@ public class MainActivity extends AppCompatActivity {
             }catch(OperationApplicationException e){
                 e.printStackTrace();
             }
-            /*}
-        }.start();*/
         }
     }
 
