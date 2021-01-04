@@ -28,12 +28,11 @@ public class InfoActivity extends AppCompatActivity {
         name.setText(Intent.getStringExtra("name"));
         phone.setText(Intent.getStringExtra("phone"));
         email.setText(Intent.getStringExtra("email"));
-        image.setImageBitmap(getIntent().getParcelableExtra("image"));
-
         //set Rounding
         GradientDrawable drawable= (GradientDrawable) getDrawable(R.drawable.background_rounding);
         image.setBackground(drawable);
         image.setClipToOutline(true);
+        image.setImageBitmap(getIntent().getParcelableExtra("image"));
     }
 
     public void mOnCall(View v){
