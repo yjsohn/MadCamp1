@@ -13,16 +13,21 @@ import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.basicapplicationfunction.Gallery.Gallery;
+import com.example.basicapplicationfunction.Temp.Alarm;
+import com.example.basicapplicationfunction.Temp.AlarmRecyclerViewAdapter;
+import com.example.basicapplicationfunction.Temp.AlarmsListFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -35,7 +40,39 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment1 fragment1 = adapter.getFragment1();
     Fragment gallery = adapter.getItem(1);
-    Fragment fragment3 = adapter.getItem(2);
+    Fragment3 fragment3 = adapter.getFragment3();
+
+    /*@Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        AlarmsListFragment alarmsListFragment = (AlarmsListFragment) getSupportFragmentManager().findFragmentById(R.id.alarmsListFragment);
+
+        if(alarmsListFragment != null) {
+            alarmsListFragment.hideButton();
+        }
+
+        AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
+        if(alarmRecyclerViewAdapter != null && alarmRecyclerViewAdapter.getButtonShow() == true){
+            alarmRecyclerViewAdapter.notifyDataSetChanged();
+            alarmRecyclerViewAdapter.setButtonShow(false);
+        }
+
+        Log.d("null", "null");
+        return super.dispatchTouchEvent(ev);
+    } */
+
+    @Override
+    public void onBackPressed(){
+        AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
+        if(alarmRecyclerViewAdapter != null && alarmRecyclerViewAdapter.getButtonShow() == true){
+            alarmRecyclerViewAdapter.notifyDataSetChanged();
+            alarmRecyclerViewAdapter.setButtonShow(false);
+            AlarmsListFragment.deleteAlarms.setVisibility(View.GONE);
+            alarmRecyclerViewAdapter.getDeleteAlarms().clear();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

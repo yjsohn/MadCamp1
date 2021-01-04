@@ -36,4 +36,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public Fragment1 getFragment1(){
         return fragment1;
     }
+
+    public Fragment3 getFragment3() {
+        return fragment3;
+    }
 }

@@ -33,7 +33,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="Add Alarm"
+            android:backgroundTint="#36518F"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/all_alarm_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="56dp"
+            android:text="Button"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_listalarms_addAlarm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.946"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

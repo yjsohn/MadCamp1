@@ -3,6 +3,7 @@ package com.example.basicapplicationfunction.Temp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,10 +16,16 @@ import java.util.List;
 public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
     private List<Alarm> alarms;
     private OnToggleAlarmListener listener;
+    private List<Alarm> deleteAlarms;
+    Boolean buttonShow = false;
+    private DeleteMode mCallback;
 
-    public AlarmRecyclerViewAdapter(OnToggleAlarmListener listener) {
+    public AlarmRecyclerViewAdapter(OnToggleAlarmListener listener, DeleteMode deleteMode) {
         this.alarms = new ArrayList<Alarm>();
         this.listener = listener;
+        this.buttonShow = false;
+        this.deleteAlarms = new ArrayList<Alarm>();
+        this.mCallback = deleteMode;
     }
 
     @NonNull
@@ -31,6 +38,7 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         Alarm alarm = alarms.get(position);
+        holder.alarmDelete.setVisibility(View.GONE);
         holder.bind(alarm, listener);
     }
 
@@ -48,5 +56,25 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
     public void setAlarms(List<Alarm> alarms) {
         this.alarms = alarms;
         notifyDataSetChanged();
+    }
+
+    public void setButtonShow(Boolean buttonShow) {
+        this.buttonShow = buttonShow;
+        if(buttonShow == true)
+            mCallback.toDeleteMode();
+        else
+            mCallback.toOriginal();
+    }
+
+    public Boolean getButtonShow() {
+        return buttonShow;
+    }
+
+    public List<Alarm> getDeleteAlarms() {
+        return deleteAlarms;
+    }
+
+    public List<Alarm> getAlarms() {
+        return alarms;
     }
 }
