@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         setViewPager();
 
     }
-
+    
     String[] permission_list = {
             Manifest.permission.WRITE_CONTACTS,
             Manifest.permission.READ_CONTACTS,
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         {
             for(int i=0; i<grantResults.length; i++)
             {
-                //허용됬다면
+                //허용됐다면
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
@@ -205,8 +205,6 @@ public class MainActivity extends AppCompatActivity {
             }catch(OperationApplicationException e){
                 e.printStackTrace();
             }
-            /*}
-        }.start();*/
         }
     }
 
