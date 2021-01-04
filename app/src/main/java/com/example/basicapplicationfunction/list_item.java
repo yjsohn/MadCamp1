@@ -10,6 +10,7 @@ public class list_item {
     private long person_id;
     private String nickname;
     private String content;
+    private String email;
 
     public long getPhoto_id() {
         return photo_id;
@@ -43,10 +44,19 @@ public class list_item {
         this.content = content;
     }
 
-    public list_item(long photo_id, long person_id, String nickname, String content) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public list_item(long photo_id, long person_id, String nickname, String content, String email) {
         this.photo_id = photo_id;
         this.person_id = person_id;
         this.nickname = nickname;
         this.content = content;
+        this.email = email;
     }
 }

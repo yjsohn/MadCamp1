@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,6 +36,14 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 //!!!!!파일 경로:  file:///storage/emulated/0/Pictures/building.jpg
 
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Fragment3 extends Fragment {
     View view;
@@ -64,7 +72,6 @@ public class Fragment3 extends Fragment {
         return fragment3;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,3 +85,4 @@ public class Fragment3 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 }
+
