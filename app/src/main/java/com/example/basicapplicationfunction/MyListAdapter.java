@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -71,6 +72,8 @@ public class MyListAdapter extends BaseAdapter{
             profile_imageView.setImageBitmap(image);
         else {    //설정된 사진 없음
             profile_imageView.setImageResource(R.drawable.profile_icon);
+            BitmapDrawable images = (BitmapDrawable) profile_imageView.getDrawable();
+            profile_imageView.setImageBitmap(resizingBitmap(images.getBitmap()));
             DrawableCompat.setTint(
                     DrawableCompat.wrap(profile_imageView.getDrawable()),
                     ContextCompat.getColor(context, R.color.highlight)
@@ -78,7 +81,7 @@ public class MyListAdapter extends BaseAdapter{
         }
 
         //set Rounding
-        GradientDrawable drawable= (GradientDrawable) context.getDrawable(R.drawable.background_rounding);
+        GradientDrawable drawable= (GradientDrawable) context.getDrawable(R.drawable.background_rounding2);
         profile_imageView.setBackground(drawable);
         profile_imageView.setClipToOutline(true);
         return convertView;
