@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,28 +7,39 @@
 
     <ImageView
         android:id="@+id/profile_imageview"
-        android:layout_width="87dp"
-        android:layout_height="81dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/profile_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nickname_textview"
         android:layout_width="308dp"
         android:layout_height="54dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="4dp"
         android:layout_toEndOf="@+id/profile_imageview"
         android:gravity="center_vertical"
         android:text="TextView"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:fontFamily="@font/lotte_light"
+        app:layout_constraintStart_toEndOf="@+id/profile_imageview"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/content_textview"
         android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nickname_textview"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="4dp"
         android:layout_toEndOf="@+id/profile_imageview"
-        android:text="TextView" />
+        android:text="TextView"
+        android:fontFamily="@font/lotte_light"
+        app:layout_constraintStart_toEndOf="@+id/profile_imageview"
+        app:layout_constraintTop_toBottomOf="@+id/nickname_textview" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
