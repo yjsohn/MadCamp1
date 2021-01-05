@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basic Application Function</string>
+    <string name="app_name">Rebel</string>
     <string name="linear_sectioned_recyclerview_vertical">Linear Sectioned RecyclerView (Vertical)</string>
     <string name="linear_sectioned_recyclerview_horizontal">Linear Sectioned RecyclerView (Horizontal)</string>
     <string name="grid_sectioned_recyclerview">Grid Sectioned RecyclerView</string>
