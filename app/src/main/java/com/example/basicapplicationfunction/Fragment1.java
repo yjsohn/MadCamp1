@@ -1,15 +1,18 @@
 package com.example.basicapplicationfunction;
 
+import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.OperationApplicationException;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.Editable;
@@ -58,7 +61,7 @@ public class Fragment1 extends Fragment{
     }
 
     public void refresh() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }
 
@@ -77,57 +80,59 @@ public class Fragment1 extends Fragment{
                 ContactsContract.Contacts.HAS_PHONE_NUMBER,
                 ContactsContract.Contacts.DISPLAY_NAME
         };
+        
+        while (getActivity().checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED);
 
-        ContentResolver cr = getActivity().getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
+            ContentResolver cr = getActivity().getContentResolver();
+            Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
 
-            do {
-                // get the contact's information
-                long person_id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                long photo_id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cursor.getString(cursor.getColumnIndex("DISPLAY_NAME"));
-                Integer hasPhone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                do {
+                    // get the contact's information
+                    long person_id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    long photo_id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    String name = cursor.getString(cursor.getColumnIndex("DISPLAY_NAME"));
+                    Integer hasPhone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
-                // get the user's email address
+                    // get the user's email address
 
-                String[] projection1 = new String[]{
-                        ContactsContract.CommonDataKinds.Email.DATA
-                };
-                String email = null;
-                Cursor ce = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, projection1,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{id}, null);
-                if (ce != null && ce.moveToFirst()) {
-                    email = ce.getString(ce.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                    ce.close();
-                }
-
-                // get the user's phone number
-                String phone = null;
-                String[] projection2 = new String[]{
-                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                };
-                if (hasPhone > 0) {
-                    Cursor cp = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection2,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
-                    if (cp != null && cp.moveToFirst()) {
-                        phone = cp.getString(cp.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        cp.close();
+                    String[] projection1 = new String[]{
+                            ContactsContract.CommonDataKinds.Email.DATA
+                    };
+                    String email = null;
+                    Cursor ce = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, projection1,
+                            ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{id}, null);
+                    if (ce != null && ce.moveToFirst()) {
+                        email = ce.getString(ce.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                        ce.close();
                     }
-                }
 
-                // if the user user has an email or phone then add it to contacts
-                if ((!TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-                        && !email.equalsIgnoreCase(name)) || (!TextUtils.isEmpty(phone))) {
-                    list_itemArrayList.add(new list_item(photo_id, person_id, name, phone, email));
-                }
+                    // get the user's phone number
+                    String phone = null;
+                    String[] projection2 = new String[]{
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                    };
+                    if (hasPhone > 0) {
+                        Cursor cp = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection2,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+                        if (cp != null && cp.moveToFirst()) {
+                            phone = cp.getString(cp.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            cp.close();
+                        }
+                    }
 
-            } while (cursor.moveToNext());
+                    // if the user user has an email or phone then add it to contacts
+                    if ((!TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                            && !email.equalsIgnoreCase(name)) || (!TextUtils.isEmpty(phone))) {
+                        list_itemArrayList.add(new list_item(photo_id, person_id, name, phone, email));
+                    }
 
-            // clean up cursor
-            cursor.close();
-        }
+                } while (cursor.moveToNext());
+
+                // clean up cursor
+                cursor.close();
+            }
 
         copylist = new ArrayList<>();
         copylist.addAll(list_itemArrayList);
