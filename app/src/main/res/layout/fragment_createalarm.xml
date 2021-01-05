@@ -16,8 +16,10 @@
             android:id="@+id/fragment_createalarm_scheduleAlarmHeading"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Schedule Alarm"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/lotte_light"
             android:gravity="center_vertical|center_horizontal"
+            android:text="Schedule Alarm"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +36,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.4"
                 android:text="Alarm Time"
+                android:fontFamily="@font/lotte_light"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -42,7 +45,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/lotte_light"
                 android:timePickerMode="spinner" />
+
         </LinearLayout>
 
         <EditText
@@ -50,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Alarm Title"
+            android:fontFamily="@font/lotte_light"
             app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_timePickerLayout" />
 
         <CheckBox
@@ -73,55 +79,80 @@
                 android:id="@+id/fragment_createalarm_checkMon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Mon" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkTue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Tue" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkWed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Wed" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkThu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Thu" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkFri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Fri" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkSat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lotte_light"
                 android:text="Sat" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkSun"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/lotte_light"
                 android:text="Sun" />
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/fragment_createalarm_scheduleAlarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#263663"
-            android:text="Schedule Alarm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="133dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:onClick="mOnContactAdd2"
+            android:scaleType="fitXY"
+            android:src="@drawable/save_icon"
+            android:tint="#263663"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="100dp"
+            android:background="#263663"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
