@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring">
 
             <CheckBox
@@ -94,56 +94,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Mon" />
+                android:text="Mon"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkTue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Tue" />
+                android:text="Tue"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkWed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Wed" />
+                android:text="Wed"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkThu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Thu" />
+                android:text="Thu"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkFri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Fri" />
+                android:text="Fri"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkSat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Sat" />
+                android:text="Sat"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/fragment_createalarm_checkSun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
-                android:textStyle="bold"
-                android:text="Sun" />
+                android:text="Sun"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
