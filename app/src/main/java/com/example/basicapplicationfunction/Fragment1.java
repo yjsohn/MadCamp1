@@ -1,7 +1,9 @@
 package com.example.basicapplicationfunction;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,17 +11,22 @@ import android.graphics.Canvas;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.ContactsContract;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -30,12 +37,14 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static android.provider.ContactsContract.Directory.DISPLAY_NAME;
 
 public class Fragment1 extends Fragment{
 
     MyListAdapter myListAdapter;
+    List<list_item> copylist;
 
     View view;
     public Fragment1() {
@@ -57,55 +66,20 @@ public class Fragment1 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment1, container, false);
-        /*ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams( new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        progressBar.setIndeterminate(true);
 
-        LinearLayout progressBarContainer = new LinearLayout(super);
-        progressBarContainer.setLayoutParams( new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        progressBarContainer.setGravity(Gravity.CENTER);
-        progressBarContainer.addView(progressBar);
-
-        getListView().setEmptyView(progressBarContainer);
-        ViewGroup root = (ViewGroup)findViewById(android.R.id.content);
-        root.addView(progressBarContainer);
-
-        String[] fromColumns = { ContactsContract.Data.DISPLAY_NAME };
-
-        int[] toViews = { android.R.id.text1 };
-
-        mAdapter = new SimpleCursorAdapter( this, // 컨텍스트
-                android.R.layout.simple_list_item_1, // 리스트 아이템 레이아웃
-                null, // 커서
-                fromColumns, // 뷰로 뿌릴 데이터
-                toViews, // 데이터를 뿌릴 타겟 뷰
-                0 // 플래그
-                );
-        setListAdapter(mAdapter);
-        //LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = this;
-        //LoaderManager loaderManager = getLoaderManager();
-        //loaderManager.initLoader(0, null, loaderCallbacks);
-        */
         ListView list = (ListView) view.findViewById(R.id.list);
         ArrayList<list_item> list_itemArrayList = new ArrayList<list_item>();
         HashMap<String, String> item;
 
-/*        Cursor c =getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-
-        while (c.moveToNext()) {
-            String contactName = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String phonenumber = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            long Photo_id = c.getLong(c.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
-            long person_id = c.getLong(c.getColumnIndex(ContactsContract.Contacts._ID));
-            String email = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1));
-            Log.d("email", email);
-            //int image = c.getInt(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.)
-            list_itemArrayList.add(new list_item(Photo_id, person_id, contactName, phonenumber, email));
-        }
-        c.close();*/
+        String[] projection = new String[]{
+                ContactsContract.Contacts.PHOTO_ID,
+                ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.HAS_PHONE_NUMBER,
+                ContactsContract.Contacts.DISPLAY_NAME
+        };
 
         ContentResolver cr = getActivity().getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
 
             do {
@@ -117,8 +91,12 @@ public class Fragment1 extends Fragment{
                 Integer hasPhone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
                 // get the user's email address
+
+                String[] projection1 = new String[]{
+                        ContactsContract.CommonDataKinds.Email.DATA
+                };
                 String email = null;
-                Cursor ce = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                Cursor ce = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, projection1,
                         ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{id}, null);
                 if (ce != null && ce.moveToFirst()) {
                     email = ce.getString(ce.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
@@ -127,8 +105,11 @@ public class Fragment1 extends Fragment{
 
                 // get the user's phone number
                 String phone = null;
+                String[] projection2 = new String[]{
+                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                };
                 if (hasPhone > 0) {
-                    Cursor cp = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    Cursor cp = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection2,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
                     if (cp != null && cp.moveToFirst()) {
                         phone = cp.getString(cp.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -148,6 +129,8 @@ public class Fragment1 extends Fragment{
             cursor.close();
         }
 
+        copylist = new ArrayList<>();
+        copylist.addAll(list_itemArrayList);
         myListAdapter = new MyListAdapter(getContext(), list_itemArrayList);
         list.setAdapter(myListAdapter);
 
@@ -191,7 +174,24 @@ public class Fragment1 extends Fragment{
             }
         });
 
+        EditText editSearch = view.findViewById(R.id.editTextTextPersonName2);
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = editSearch.getText().toString();
+                search(text);
+            }
+        });
         return view;
     }
 
@@ -207,25 +207,85 @@ public class Fragment1 extends Fragment{
 
     public void ContactAdd(){
         Intent intent = new Intent(getActivity(), ContactActivity.class);
-        //startActivity(intent);
         startActivityForResult(intent, Code.requestCode);
-        //fragment1.refresh();
-        //Log.d(null, "ContactAdd: refresh fin");
     }
 
+    public void search(String charText){
+        myListAdapter.list_itemArrayList.clear();
 
-    /*public Loader<Cursor> onCreateLoader(int id, Bundle args) { // 커서로더를 만들어 리턴해주면, 로딩이 시작된다.
-         return new CursorLoader( this, ContactsContract.Data.CONTENT_URI, PROJECTION, SELECTION, null, null );
-    }*/
+        if(charText.length() == 0){
+            myListAdapter.list_itemArrayList.addAll(copylist);
+        }
+        else{
+            copylist.forEach(item -> {
+                if(item.getNickname().toLowerCase().contains(charText)){
+                    myListAdapter.list_itemArrayList.add(item);
+                }
+            });
+        }
 
-    /*public void onLoadFinished(Loader<Cursor> loader, Cursor data) { // 커서어댑터의 커서를 업데이트 해주면, // fromColumns과 toView를 참고하여 리스트뷰가 업데이트된다.
-        mAdapter.swapCursor(data);
-    } // Called when a previously created loader is reset, making the data // unavailable
-    public void onLoaderReset(Loader<Cursor> loader) { // This is called when the last Cursor provided to onLoadFinished() // above is about to be closed. We need to make sure we are no // longer using it.
-        mAdapter.swapCursor(null);
+        myListAdapter.notifyDataSetChanged();
     }
+
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) { // do something when a list item is clicked
-        Log.i("GUN", ((TextView)v).getText().toString());
-    }*/
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultIntent) {
+        super.onActivityResult(requestCode, resultCode, resultIntent);
+        if(requestCode == Code.requestCode && resultCode == Code.resultCode){
+
+            /*new Thread(){
+            @Override
+            public void run() {*/
+
+            ArrayList<ContentProviderOperation> list = new ArrayList<>();
+            try{
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, resultIntent.getStringExtra("name"))   //이름
+
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, resultIntent.getStringExtra("number"))           //전화번호
+                                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE  , ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)   //번호타입(Type_Mobile : 모바일)
+
+                                .build()
+                );
+
+                list.add(
+                        ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+
+                                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                                .withValue(ContactsContract.CommonDataKinds.Email.DATA  , resultIntent.getStringExtra("email"))  //이메일
+                                .withValue(ContactsContract.CommonDataKinds.Email.TYPE  , ContactsContract.CommonDataKinds.Email.TYPE_WORK)     //이메일타입(Type_Work : 직장)
+
+                                .build()
+                );
+
+                getActivity().getContentResolver().applyBatch(ContactsContract.AUTHORITY, list);  //주소록추가
+                list.clear();   //리스트 초기화
+                refresh();
+            }catch(RemoteException e){
+                e.printStackTrace();
+            }catch(OperationApplicationException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

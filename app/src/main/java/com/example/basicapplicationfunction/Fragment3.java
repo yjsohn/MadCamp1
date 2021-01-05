@@ -33,6 +33,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.basicapplicationfunction.Temp.Alarm;
+import com.example.basicapplicationfunction.Temp.AlarmRecyclerViewAdapter;
+import com.example.basicapplicationfunction.Temp.AlarmsListFragment;
 import com.example.basicapplicationfunction.Temp.DeleteMode;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -43,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -77,6 +81,7 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("Fragment", "Fragment3");
         view = inflater.inflate(R.layout.fragment3, container, false);
         context = view.getContext();
         return view;
@@ -85,6 +90,14 @@ public class Fragment3 extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
+
+        if (alarmRecyclerViewAdapter.getButtonShow() == true) {
+            alarmRecyclerViewAdapter.setButtonShow(false);
+            alarmRecyclerViewAdapter.getDeleteAlarms().clear();
+            alarmRecyclerViewAdapter.notifyDataSetChanged();
+            AlarmsListFragment.deleteAlarms.setVisibility(View.GONE);
+        }
     }
 }
 

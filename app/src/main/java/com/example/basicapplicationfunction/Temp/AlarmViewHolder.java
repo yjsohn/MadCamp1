@@ -97,6 +97,9 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                         deleteAlarms.add(alarm);
                     }
                 }
+                else{
+
+                }
             }
         });
 

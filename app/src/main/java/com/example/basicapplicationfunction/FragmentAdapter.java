@@ -1,10 +1,14 @@
 package com.example.basicapplicationfunction;
 
+import android.util.Log;
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.basicapplicationfunction.Gallery.Gallery;
+import com.example.basicapplicationfunction.Temp.AlarmRecyclerViewAdapter;
 import com.example.basicapplicationfunction.Temp.AlarmsListFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
@@ -14,6 +18,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     Fragment1 fragment1 = Fragment1.newInstance();
     Gallery gallery = Gallery.newInstance();
     Fragment3 fragment3 = Fragment3.newInstance();
+    AlarmRecyclerViewAdapter alarmRecyclerViewAdapter = (AlarmRecyclerViewAdapter) AlarmsListFragment.getAlarmRecyclerViewAdapter();
 
     @Override
     public Fragment getItem(int position) {
