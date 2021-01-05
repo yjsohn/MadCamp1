@@ -43,6 +43,8 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
             holder.alarmDelete.setChecked(false);
         }
         else {
+            if(deleteAlarms.contains(alarms.get(position)))
+                holder.alarmDelete.setChecked(true);
             holder.alarmDelete.setVisibility(View.VISIBLE);
         }
         holder.bind(alarm, listener);

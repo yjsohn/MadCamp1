@@ -80,7 +80,7 @@ public class Fragment1 extends Fragment{
                 ContactsContract.Contacts.HAS_PHONE_NUMBER,
                 ContactsContract.Contacts.DISPLAY_NAME
         };
-        
+
         while (getActivity().checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED);
 
             ContentResolver cr = getActivity().getContentResolver();
@@ -94,7 +94,6 @@ public class Fragment1 extends Fragment{
                     String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
                     String name = cursor.getString(cursor.getColumnIndex("DISPLAY_NAME"));
                     Integer hasPhone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-
                     // get the user's email address
 
                     String[] projection1 = new String[]{
@@ -136,6 +135,9 @@ public class Fragment1 extends Fragment{
 
         copylist = new ArrayList<>();
         copylist.addAll(list_itemArrayList);
+        list_itemArrayList.forEach(s -> {
+            Log.d("item", s.getNickname());
+        });
         myListAdapter = new MyListAdapter(getContext(), list_itemArrayList);
         list.setAdapter(myListAdapter);
 
