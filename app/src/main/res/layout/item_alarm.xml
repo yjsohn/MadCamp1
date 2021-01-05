@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:00"
-                android:fontFamily="@font/lotte_light"
+                android:layout_marginStart="10dp"
                 android:textSize="36sp"/>
 
             <ImageView
