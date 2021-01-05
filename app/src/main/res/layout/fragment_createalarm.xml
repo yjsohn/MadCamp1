@@ -12,6 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="370dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/background_rounding"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/fragment_createalarm_scheduleAlarmHeading"
             android:layout_width="match_parent"
@@ -136,28 +146,6 @@
             android:text="Schedule Alarm"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="133dp" />
-
-        <View
-            android:layout_width="330dp"
-            android:layout_height="2dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="100dp"
-            android:background="#263663"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:layout_width="330dp"
-            android:layout_height="2dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="270dp"
-            android:background="#263663"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -18,6 +18,7 @@
             android:text="My Alarms"
             android:gravity="center_vertical|center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:fontFamily="@font/lotte_light"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView

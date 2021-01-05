@@ -145,14 +145,15 @@ public class EditContent extends AppCompatActivity {
         dialog.getDatePicker().setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String day;
+                monthOfYear++;
+                String month;
                 if(monthOfYear < 10){
-                    day = "0" + dayOfMonth;
+                    month = "0" + monthOfYear;
                 }
                 else{
-                    day = "" + dayOfMonth;
+                    month = "" + monthOfYear;
                 }
-                String date = "" + year + "." + (monthOfYear + 1) + "." + day;
+                String date = "" + year + "." + month + "." + dayOfMonth;
                 date_edit.setText(date);
             }
         });
