@@ -3,6 +3,7 @@ package com.example.basicapplicationfunction;
 import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
@@ -19,7 +20,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +86,8 @@ public class Fragment1 extends Fragment{
         };
 
         while (getActivity().checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED);
+
+            getActivity().getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[]{ContactsContract.RawContacts.CONTACT_ID}, null, null, null);
 
             ContentResolver cr = getActivity().getContentResolver();
             Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, projection, null, null, null);
@@ -173,7 +179,41 @@ public class Fragment1 extends Fragment{
                 //Toast.makeText(getContext(), "미구현", Toast.LENGTH_SHORT).show();
             }
         });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                PopupMenu popup= new PopupMenu(getActivity(), view);//view는 오래 눌러진 뷰를 의미
+                getActivity().getMenuInflater().inflate(R.menu.menu_listview, popup.getMenu());
+                final int index= position;
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // TODO Auto-generated method stub
+                        switch( item.getItemId() ){
+                            /*case R.id.modify:
+                                Toast.makeText(getActivity(), list_itemArrayList.get(index)+" Modify", Toast.LENGTH_SHORT).show();
+                                break;*/
+                            case R.id.delete:
+                                list_item s = (list_item) parent.getItemAtPosition(position);
+                                deleteContact(getContext(), s.getPerson_id());
+                                refresh();
+                                break;
+                            /*ase R.id.info:
+                                Toast.makeText(getActivity(), list_itemArrayList.get(index)+" Info", Toast.LENGTH_SHORT).show();
+                                break;*/
+                        }
+                        return false;
+                    }
+                });
+                popup.show();//Popup Menu 보이기
+                return true;
 
+                /*Log.d("event","Longclick");
+                list_item item = (list_item) parent.getItemAtPosition(position);
+                deleteContact(getContext(), item.getPerson_id());
+                refresh();*/
+            }
+        });
         view.findViewById(R.id.btnContactAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +240,10 @@ public class Fragment1 extends Fragment{
             }
         });
         return view;
+    }
+
+    static public void deleteContact(Context context, long rawContactId) {
+        context.getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + rawContactId, null);
     }
 
     public void mOnContactAdd(View v){
