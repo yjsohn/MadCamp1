@@ -1,26 +1,37 @@
 package com.example.basicapplicationfunction.Gallery;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.basicapplicationfunction.R;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 //수정->저장
 public class EditContent extends AppCompatActivity {
@@ -35,6 +46,13 @@ public class EditContent extends AppCompatActivity {
 
     ImageView imageView;
     ImageButton save_btn;
+
+    Intent searchIntent;
+    int AUTOCOMPLETE_REQUEST_CODE = 1;
+
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+    // Set the fields to specify which types of place data to
+    // return after the user has made a selection.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +63,7 @@ public class EditContent extends AppCompatActivity {
         MyDB = new DBHelper(this);
         db = MyDB.getWritableDatabase();
         ContentValues values = new ContentValues();
+        Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
 
         //TextView
         date_tv = findViewById(R.id.date_tv);
@@ -88,8 +107,80 @@ public class EditContent extends AppCompatActivity {
         if(ImageInfo[3].equals(""))
             desc_edit.setHint("내용을 입력해주세요");
 
+        date_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    SelectDate(v);
+                }
+            }
+        });
+
+        loc_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    SelectLocation(v);
+                }
+            }
+        });
+
         date_edit.setText(ImageInfo[1]);
         loc_edit.setText(ImageInfo[2]);
         desc_edit.setText(ImageInfo[3]);
     }
+
+    public void SelectDate(View v) {
+        String date = date_edit.getText().toString();
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme);
+        dialog.show();
+        dialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+        dialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                date_edit.setText(date);
+            }
+        });
+        dialog.getDatePicker().setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String day;
+                if(monthOfYear < 10){
+                    day = "0" + dayOfMonth;
+                }
+                else{
+                    day = "" + dayOfMonth;
+                }
+                String date = "" + year + "." + (monthOfYear + 1) + "." + day;
+                date_edit.setText(date);
+            }
+        });
+    }
+
+    public void SelectLocation(View v){
+        searchIntent = new Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.OVERLAY, fields)
+            .build(this);
+        startActivityForResult(searchIntent, AUTOCOMPLETE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                String location = place.getName();
+                loc_edit.setText(location);
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.e("Error", status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
 }

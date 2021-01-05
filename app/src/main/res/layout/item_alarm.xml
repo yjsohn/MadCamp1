@@ -33,13 +33,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text=""
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/item_alarm_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:00"
+                android:layout_marginStart="10dp"
                 android:textSize="36sp"/>
 
             <ImageView
@@ -58,12 +59,14 @@
                     android:id="@+id/item_alarm_recurringDays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/lotte_light"
                     android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/item_alarm_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/lotte_light"
                     android:textSize="12sp" />
 
             </LinearLayout>
