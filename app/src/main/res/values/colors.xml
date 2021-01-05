@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#E4E8F0</color>
     <color name="highlight">#263663</color>
+    <color name="skyblue">#72A0E0</color>
 </resources>

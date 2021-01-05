@@ -9,4 +9,7 @@
         <item name="android:dropDownHorizontalOffset">-8dp</item>
         <item name="android:dropDownVerticalOffset">8dp</item>
     </style>
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/skyblue</item>
+    </style>
 </resources>
