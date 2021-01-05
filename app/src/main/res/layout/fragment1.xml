@@ -13,13 +13,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="검색" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                android:backgroundTint="@color/highlight"
+                android:src="@drawable/search_icon2_foreground"/>
+
+            <EditText
+                android:id="@+id/editTextTextPersonName2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="검색"
+                android:inputType="textPersonName"
+                android:fontFamily="@font/lotte_light"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <ListView
             android:id="@+id/list"
