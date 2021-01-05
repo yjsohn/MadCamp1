@@ -24,7 +24,6 @@ import com.example.basicapplicationfunction.R;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;

@@ -20,28 +20,28 @@
 
     <Button
         android:id="@+id/activity_ring_dismiss"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
         android:layout_marginTop="132dp"
         android:backgroundTint="@color/skyblue"
         android:fontFamily="@font/lotte_light"
         android:text="중지"
         android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_ring_clock" />
 
     <Button
         android:id="@+id/activity_ring_snooze"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/skyblue"
         android:fontFamily="@font/lotte_light"
         android:text="다시 알림"
         android:textSize="25sp"
-        android:backgroundTint="@color/skyblue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_ring_clock" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_ring_dismiss" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
