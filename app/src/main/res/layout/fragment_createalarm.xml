@@ -28,6 +28,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/lotte_light"
+            android:textStyle="bold"
+            android:textColor="@color/highlight"
             android:gravity="center_vertical|center_horizontal"
             android:text="Schedule Alarm"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -46,6 +48,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.4"
                 android:text="Alarm Time"
+                android:textStyle="bold"
                 android:fontFamily="@font/lotte_light"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
@@ -74,6 +77,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="Recurring Alarm"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title" />
 
@@ -90,6 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Mon" />
 
             <CheckBox
@@ -97,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Tue" />
 
             <CheckBox
@@ -104,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Wed" />
 
             <CheckBox
@@ -111,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Thu" />
 
             <CheckBox
@@ -118,6 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Fri" />
 
             <CheckBox
@@ -125,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Sat" />
 
             <CheckBox
@@ -132,6 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lotte_light"
+                android:textStyle="bold"
                 android:text="Sun" />
 
         </LinearLayout>

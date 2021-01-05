@@ -4,46 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Ring Ring"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/background">
 
     <ImageView
         android:id="@+id/activity_ring_clock"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_ring_dismiss"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/ic_alarm_black_24dp"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/alarm_icon"
+        android:background="@android:color/transparent"/>
 
     <Button
         android:id="@+id/activity_ring_dismiss"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Dismiss"
-        app:layout_constraintBottom_toTopOf="@+id/activity_ring_snooze"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="132dp"
+        android:backgroundTint="@color/skyblue"
+        android:fontFamily="@font/lotte_light"
+        android:text="중지"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_ring_clock" />
 
     <Button
         android:id="@+id/activity_ring_snooze"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Snooze"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/skyblue"
+        android:fontFamily="@font/lotte_light"
+        android:text="다시 알림"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_ring_dismiss" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
