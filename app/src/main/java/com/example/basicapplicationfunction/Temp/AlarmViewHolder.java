@@ -18,6 +18,7 @@ import com.example.basicapplicationfunction.MainActivity;
 import com.example.basicapplicationfunction.R;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 import butterknife.OnClick;
 
@@ -49,8 +50,9 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
 
                 if(pos != RecyclerView.NO_POSITION && alarmRecyclerViewAdapter.getButtonShow()==false) {
                     alarmRecyclerViewAdapter.setButtonShow(true);
+                    /*alarmDelete = itemView.findViewById(R.id.item_alarm_delete);
+                    alarmDelete.setChecked(true);*/
                     alarmRecyclerViewAdapter.notifyDataSetChanged();
-                    alarmDelete.setChecked(true);
                     AlarmsListFragment.deleteAlarms.setVisibility(View.VISIBLE);
 
                     List<Alarm> alarms = alarmRecyclerViewAdapter.getAlarms();
@@ -58,7 +60,6 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                     Alarm alarm = alarms.get(pos);
 
                     deleteAlarms.add(alarm);
-
 
                     /*
                     List<Alarm> alarms = alarmRecyclerViewAdapter.getAlarms();

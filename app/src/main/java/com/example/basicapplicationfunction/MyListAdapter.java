@@ -59,12 +59,13 @@ public class MyListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
          convertView = LayoutInflater.from(context).inflate(R.layout.item, null);
-         nickname_textView = (TextView)convertView.findViewById(R.id.nickname_textview);
-         content_textView = (TextView)convertView.findViewById(R.id.content_textview);
-         profile_imageView = (ImageView)convertView.findViewById(R.id.profile_imageview);
         }
+        nickname_textView = (TextView)convertView.findViewById(R.id.nickname_textview);
+        content_textView = (TextView)convertView.findViewById(R.id.content_textview);
+        profile_imageView = (ImageView)convertView.findViewById(R.id.profile_imageview);
 
         nickname_textView.setText(list_itemArrayList.get(position).getNickname());
+        Log.d("name", nickname_textView.getText().toString());
         content_textView.setText(list_itemArrayList.get(position).getContent());
         Bitmap image = loadContactPhoto(context.getContentResolver(), list_itemArrayList.get(position).getPerson_id(), list_itemArrayList.get(position).getPhoto_id());
         //profile_imageView.setImageBitmap(list_itemArrayList.get(position).getProfile_image());
